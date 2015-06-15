@@ -1,0 +1,10 @@
+# ===== Start Yeoman.gitignore =====
+node_modules/
+bower_components/
+vendor/
+*.log
+*.bk
+
+build/
+bin/
+# ===== End Yeoman.gitignore =====

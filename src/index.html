@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app="<%=appName%>" ng-controller="AppController">
+<head>
+    <title ng-bind="pageTitle">EmDoMicro: Scoresheet</title>
+
+    <!-- compiled CSS --><% styles.forEach( function ( file ) { %>
+    <link rel="stylesheet" type="text/css" href="<%= file %>" /><% }); %>
+
+    <!-- compiled JavaScript --><% scripts.forEach( function ( file ) { %>
+    <script type="text/javascript" src="<%= file %>"></script><% }); %>
+</head>
+<body>
+    <header class='container'>
+      <h1 class="text-center">Scoresheet <br> <small>for Eminent Domain: Microcosm</small></h1>
+    </header>
+    <div role="main" ui-view="main" class='container'>
+
+    </div>
+
+    <footer class="container">
+        &copy; <%= date %> <%= author %>
+    </footer>
+</body>
+</html>
