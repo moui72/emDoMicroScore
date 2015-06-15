@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html ng-app="emDoScore" ng-controller="AppController">
+<head>
+    <title ng-bind="pageTitle">EmDoMicro: Scoresheet</title>
+
+    <!-- compiled CSS -->
+    <link rel="stylesheet" type="text/css" href="assets/emDoScore-0.0.1.css" />
+
+    <!-- compiled JavaScript -->
+    <script type="text/javascript" src="assets/emDoScore-0.0.1.js"></script>
+</head>
+<body class="{icons: tab === 1, conditions: tab === 2}">
+    <header class='container'>
+      <h1 class="text-center">Scoresheet <br> <small>for Eminent Domain: Microcosm</small></h1>
+    </header>
+    <div role="main" ui-view="main" class='container'>
+
+    </div>
+
+    <footer class="container">
+        &copy; 2015 Tyler J. Peckenpaugh
+    </footer>
+</body>
+</html>

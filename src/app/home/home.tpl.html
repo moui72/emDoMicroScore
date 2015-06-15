@@ -1,27 +1,39 @@
-<div class='text-center scoreboard'>
-  <h2>You&apos;ve earned {{score | number : 0}} influence.</h2>
-  <label>Raw influence</label>
-  <div class='input-group inf'>
-    <span class='input-group-btn' ng-click="increment($index,'inf')"><button class='btn btn-success'><i class="fa fa-plus"></i></button></span>
-    <input accept="text/html" type="number" min="0" ng-model="inf" class="form-control" ng-change="calculateScore()">
-    <span class='input-group-btn'><button class='btn btn-warning' ng-click="decrement($index,'inf')" ><i class="fa fa-minus"></i></button></span>
+<nav>
+  <div class='nv' ng-hide="minned">
+    <div class="btn-group btn-group-sm" role="group">
+      <button class="btn btn-info" ng-click="setTab(0)" ng-class="{active: isTab(0)}"><i class="fa fa-support"></i> <span class="sr-only">Help</span></button>
+      <button class="btn btn-default" ng-click="setTab(1)" ng-class="{active: isTab(1)}"><i class="fa fa-trophy"></i> Icons</button>
+      <button class="btn btn-default" ng-click="setTab(2)" ng-class="{active: isTab(2)}"><i class="fa fa-tachometer"></i> Conditions</button>
+    </div>
   </div>
-</div>
-
-<tabset vertical="false" justified="true" type='pills'>
-  <tab heading="Help">
-    <div class='help'>
+  <button class="btn btn-warning left btn-xs" aria-hidden="true" ng-hide="minned" ng-click="minned = true"><i class="fa fa-minus"></i></button>
+  <button class="btn btn-info left btn-xs" aria-hidden="true" ng-show="minned" ng-click="minned = false"><i class="fa fa-plus"></i></button>
+</nav>
+<div class="scoreboardWrapper">
+  <div class="text-center scoreboard">
+    <h2>You&apos;ve earned {{score | number : 0}} influence.</h2>
+    <label>Raw influence</label>
+    <div class="input-group inf">
+      <span class="input-group-btn" ng-click="increment($index, 'inf')"><button class="btn btn-success"><i class="fa fa-plus"></i></button></span>
+      <input accept="text/html" type="number" min="0" ng-model="inf" class="form-control" ng-change="calculateScore()">
+      <span class="input-group-btn"><button class="btn btn-warning" ng-click="decrement($index, 'inf')" ><i class="fa fa-minus"></i></button></span>
+    </div>
+  </div>
+<div>
+<div class="contents">
+  <div heading="Help" ng-show="tab === 0">
+    <div class="help">
       <p>This application is intended to make the scoring of the card game Eminent Domain: Michrochosm easier.</p>
       <p>You should approach use of this app in three steps after having completed your game:</p>
       <ol>
         <li>
-          <p>Enter the <strong>icons, colonies, and spoils</strong> you've collected.</p>
+          <p>Enter the <strong>icons, colonies, and spoils</strong> you"ve collected on the <strong>icons</strong> tab.</p>
           <p>This includes things like how many colonies you gained, how many red planets you have, etc.
           It does not include things like the "1 influence per colony" that your cards show in the top right.
           These are counted in the next step.</p>
         </li>
         <li>
-          <p>Enter the  <strong>scoring conditions</strong> shown on your cards.</p>
+          <p>Enter the  <strong>scoring conditions</strong> shown on your cards on the <strong>conditions</strong> tab.</p>
           <p>This includes things like "1 influence per capital" and "1 influence per red planet." These should be on the upper right corner of your cards.</p>
         </li>
         <li>
@@ -29,44 +41,43 @@
         </li>
       </ol>
     </div>
-  </tab>
-  <tab heading="Collected icons">
-    <h1 class='text-center'>Count your icons (what you collected)</h1>
-    <div class='container'>
-      <div ng-repeat="icon in sets" class='{{gridClasses}} griditem'>
-        <div class='itemWrapper'>
-          <button ng-click="increment($index,'aq')" class='btn btn-default gridbtn {{icon.name}}'>
-            <i class='fa fa-{{icon.symbol}}'></i>
+  </div>
+  <div heading="Icons" ng-show="tab === 1">
+    <h1 class="text-center">Icons</h1>
+    <div class="container">
+      <div ng-repeat="icon in sets" class="{{gridClasses}} griditem">
+        <div class="itemWrapper">
+          <button ng-click="increment($index,'aq')" class="btn btn-default gridbtn {{icon.name}}">
+            <i class="fa fa-{{icon.symbol}}"></i>
             <h3>{{icon.name}}</h3>
           </button>
-          <div class='input-group'>
-            <span class='input-group-btn' ng-click="increment($index,'aq')"><button class='btn btn-success'><i class="fa fa-plus"></i></button></span>
+          <div class="input-group-sm input-group">
+            <span class="input-group-btn" ng-click="increment($index, 'aq')"><button class="btn btn-success"><i class="fa fa-plus"></i></button></span>
             <input accept="text/html" type="number" min="0" ng-model="icon.aqCount" class="form-control" ng-change="calculateScore()">
-            <span class='input-group-btn'><button class='btn btn-warning' ng-click="decrement($index,'aq')" ><i class="fa fa-minus"></i></button></span>
+            <span class="input-group-btn"><button class="btn btn-warning" ng-click="decrement($index, 'aq')" ><i class="fa fa-minus"></i></button></span>
           </div>
-          <button class="btn btn-danger clr"  ng-click="zero($index, 'aq')">clear</button>
+          <button class="btn btn-danger clr btn-xs"  ng-click="zero($index, 'aq')">reset</button>
         </div>
       </div>
     </div>
-  </tab>
-  <tab heading="Scoring conditions">
-    <h1 class='text-center'>Count your scoring conditions (what you score)</h1>
-    <div class='container'>
-      <div ng-repeat="icon in sets" class='{{gridClasses}} griditem'>
-        <div class='itemWrapper'>
-          <button ng-click="increment($index,'sc')" class='btn btn-default gridbtn {{icon.name}}'>
-            <i class='fa fa-{{icon.symbol}}'></i>
+  </div>
+  <div heading="Conditions" ng-show="tab === 2">
+    <h1 class="text-center">Scoring conditions</h1>
+    <div class="container">
+      <div ng-repeat="icon in sets" class="{{gridClasses}} griditem">
+        <div class="itemWrapper">
+          <button ng-click="increment($index, 'sc')" class="btn btn-default gridbtn {{icon.name}}">
+            <i class="fa fa-{{icon.symbol}}"></i>
             <h3>{{icon.name}}</h3>
           </button>
-          <div class='input-group'>
-            <span class='input-group-btn' ng-click="increment($index,'sc')"><button class='btn btn-success'><i class="fa fa-plus"></i></button></span>
+          <div class="input-group-sm input-group">
+            <span class="input-group-btn" ng-click="increment($index,'sc')"><button class="btn btn-success"><i class="fa fa-plus"></i></button></span>
             <input accept="text/html" type="number" min="0" ng-model="icon.scCount" class="form-control" ng-change="calculateScore()">
-            <span class='input-group-btn'><button class='btn btn-warning' ng-click="decrement($index,'sc')" ><i class="fa fa-minus"></i></button></span>
+            <span class="input-group-btn"><button class="btn btn-warning" ng-click="decrement($index, 'sc')" ><i class="fa fa-minus"></i></button></span>
           </div>
-          <button class="btn btn-warning clr" ng-click="zero($index, 'sc')">clear</button>
+          <button class="btn btn-danger clr btn-xs" ng-click="zero($index, 'sc')">reset</button>
         </div>
       </div>
     </div>
-  </tab>
-
-</tabset>
+  </div>
+</div>

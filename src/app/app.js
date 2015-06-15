@@ -17,6 +17,5 @@
     'templates-common',
     'ui.router.state',
     'ui.router',
-    'ui.bootstrap',
-    'angular-event-emitter'
+    'ui.bootstrap'
 ])));

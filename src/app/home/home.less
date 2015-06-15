@@ -4,6 +4,21 @@
 @purple: #9900f9;
 body{
   font-size: 100%;
+  padding-bottom: 60px;
+  background-color: #eee;
+}
+body.icons{
+  background-color: #ff3;
+}
+h1{
+  font-size: 2em;
+}
+h2{
+  font-size: 1.5em;
+}
+h3{
+  font-size: 1em;
+  line-height: .75em;
 }
 .griditem{
   color: #666;
@@ -12,23 +27,22 @@ body{
     margin: .25em 0;
   }
   text-align: center;
-  padding: 1em;
+  padding: .5em;
   .itemWrapper{
     padding: .25em;
     background-color: #fff;
     border-radius: .5em;
-    box-shadow: 0px 0px 3px 3px rgba(0,0,0,.3);
-    max-width: 20em;
+    box-shadow: 0px 0px 3px 3px rgba(0,0,0,.2);
   }
   .gridbtn{
     padding: .25em;
     color: #fff;
     display: block;
     background-color: #333;
-    margin: .25em auto;
+    margin: 0 auto;
     width: 100%;
     i{
-      font-size: 3em;
+      font-size: 1.5em;
       color: #ccc;
     }
   }
@@ -44,14 +58,24 @@ body{
   .purple{
     background-color: @purple;
   }
+  .input-group{
+    margin: .125em auto;
+    -ms-transform: scale(.75,.75); /* IE 9 */
+    -webkit-transform: scale(.75,.75); /* Safari */
+    transform: scale(.75,.75);
+  }
 
 }
-.scoreboard{
-  border-radius:1em;
-  background-color: #333;
-  color: #eee;
-  padding: .55em;
-  margin-bottom: 1em;
+.scoreboardWrapper{
+  padding: 0 1em;
+  .scoreboard{
+    border-radius:.5em;
+    background-color: #333;
+    color: #eee;
+    padding: 1em;
+    padding-top: .5em;
+    margin-bottom: 1em;
+  }
 }
 button.gridbtn:hover{
   background-color: #EDC;
@@ -64,21 +88,18 @@ footer{
   text-align: center;
   font-size: .9em;
 }
-.clr{
-  margin: .25em 0;
-}
 .help{
   padding: 1em;
+  font-size: 1.5em;
+  box-shadow: 0px 0px 3px 3px rgba(0,0,0,.2);
 }
-.help, .tab-content{
+.help{
   background-color: #fff;
   color: #333;
   p{
     margin-top: 0;
   }
   border-radius: 1em;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
   margin-bottom: 1em;
 }
 .container{
@@ -88,12 +109,34 @@ footer{
   max-width: 400px;
   margin: 0 auto;
 }
-h1{
-  font-size: 2em;
-}
-h2{
-  font-size: 1.5em;
-}
-h3{
-  font-size: 1.25em;
+
+nav{
+  .nv{
+    text-align: center;
+    position: fixed;
+    height: 43px;
+    padding-top: 6px;
+    bottom: 0;
+    left:0;
+    width: 100vw;
+    z-index: 100;
+    .btn-group{
+      margin: 0 auto;
+      button{
+        opacity: 1;
+      }
+    }
+    button.active{
+      background-color: #393;
+      color: #ccc;
+    }
+    background-color: #333;
+    opacity: .95;
+  }
+  .left{
+    position: fixed;
+    left: 10px;
+    bottom: 10px;
+    z-index: 200;
+  }
 }

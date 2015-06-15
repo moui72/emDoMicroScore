@@ -13,12 +13,11 @@
 
   // As you add controllers to a module and they grow in size, feel free to place them in their own files.
   //  Let each module grow organically, adding appropriate organization and sub-folders as needed.
-  module.controller('HomeController', function($scope, $on, $emit) {
+  module.controller('HomeController', function($scope, $rootScope) {
     // The top section of a controller should be lean and make it easy to see the "signature" of the controller
     //  at a glance.  All function definitions should be contained lower down.
     var model = this;
-    model.someVar = 'blue';
-    model.someList = ['one', 'two', 'three'];
+
     $scope.sets = [
       {name: 'colonies', symbol: 'globe', aqCount: 0, scCount: 0},
       {name: 'spoils', symbol: 'crosshairs', aqCount: 0, scCount: 0},
@@ -29,6 +28,7 @@
       {name: 'green', symbol: 'adjust', aqCount: 0, scCount: 0},
       {name: 'purple', symbol: 'adjust', aqCount: 0, scCount: 0}
     ];
+
     $scope.gridClasses = 'col-lg-3 col-md-4 col-sm-4 col-xs-6';
     $scope.score = 0;
     $scope.inf = 0;
@@ -37,13 +37,26 @@
     $scope.zero = zero;
     $scope.calculateScore = calculateScore;
     $scope.pageTitle = 'EmDO Microcosm Scoring';
-    $scope.tabs = [];
+    $rootScope.tab = 0;
+    $scope.setTab = setTab;
+    $scope.isTab = isTab;
+    $scope.minned = false;
 
     init();
 
     function init() {
       // A definitive place to put everything that needs to run when the controller starts. Avoid
       //  writing any code outside of this function that executes immediately.
+    }
+
+    function setTab(n) {
+      $scope.tab = n;
+
+      return n;
+    }
+
+    function isTab(n){
+      return $scope.tab === n;
     }
 
     function calculateScore() {
@@ -59,6 +72,7 @@
         score += $scope.inf;
       }
       $scope.score = score;
+
       return score;
     }
 
@@ -73,7 +87,8 @@
       if ($scope.sets[index][type + 'Count'] < 0) {
         $scope.sets[index][type + 'Count'] = 0;
       }
-      $scope.score = calculateScore();
+      $scope.score = calculateScore($scope.sets);
+
       return $scope.sets;
     }
 
@@ -83,6 +98,7 @@
         if ($scope.inf < 0) {
           $scope.inf = 0;
         }
+        $scope.score = calculateScore($scope.sets);
 
         return $scope.inf;
       }
@@ -91,6 +107,7 @@
       if ($scope.sets[index][type + 'Count'] < 0) {
         $scope.sets[index][type + 'Count'] = 0;
       }
+      $scope.score = calculateScore($scope.sets);
 
       return $scope.sets;
     }
@@ -98,6 +115,7 @@
     function zero(index, type) {
       console.log('clearing '+index);
       $scope.sets[index][type + 'Count'] = 0;
+      $scope.score = calculateScore($scope.sets);
 
       return $scope.sets;
     }

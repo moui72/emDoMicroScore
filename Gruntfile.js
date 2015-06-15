@@ -104,7 +104,7 @@ module.exports = function(grunt) {
     pkg: grunt.file.readJSON("package.json"),
     cordovacli: {
       options: {
-        path: 'emDoMsc',
+        path: 'cordova',
         cli: 'cordova'
       },
       cordova: {
@@ -198,9 +198,7 @@ module.exports = function(grunt) {
         ' */\n'
     },
 
-    /**
-     * The directories to delete when 'grunt clean' is executed.
-     */
+
     clean: {
       all: [
         '<%= build_dir %>',
@@ -212,11 +210,6 @@ module.exports = function(grunt) {
       index: ['<%= build_dir %>/index.html']
     },
 
-    /**
-     * The 'copy' task just copies files from A to B. We use it here to copy
-     * our project assets (images, fonts, etc.) and javascripts into
-     * 'build_dir', and then to copy the assets to 'compile_dir'.
-     */
     copy: {
       build_app_assets: {
         files: [{
@@ -277,9 +270,6 @@ module.exports = function(grunt) {
       }
     },
 
-    /**
-     * 'grunt concat' concatenates multiple source files into a single file.
-     */
     concat: {
       // The 'build_css' target concatenates compiled CSS and vendor CSS together.
       build_css: {
@@ -307,13 +297,6 @@ module.exports = function(grunt) {
       }
     },
 
-    /**
-     * 'grunt coffee' compiles the CoffeeScript sources. To work well with the
-     * rest of the build, we have a separate compilation task for sources and
-     * specs so they can go to different places. For example, we need the
-     * sources to live with the rest of the copied JavaScript so we can include
-     * it in the final build, but we don't want to include our specs there.
-     */
     coffee: {
       source: {
         options: {
@@ -326,28 +309,21 @@ module.exports = function(grunt) {
         ext: '.js'
       }
     },
-
-    /**
-     * 'ng-annotate' annotates the sources for safe minification. That is, it allows us
-     * to code without the array syntax.
-     */
     ngAnnotate: {
       options: {
         singleQuotes: true
       },
       build: {
-        files: [{
-          src: ['<%= app_files.js %>'],
-          cwd: '<%= build_dir %>',
-          dest: '<%= build_dir %>',
-          expand: true
-        }, ]
+        files: [
+          {
+            src: ['<%= app_files.js %>'],
+            cwd: '<%= build_dir %>',
+            dest: '<%= build_dir %>',
+            expand: true
+          },
+        ]
       },
     },
-
-    /**
-     * Minify the sources!
-     */
     uglify: {
       compile: {
         options: {
@@ -358,12 +334,6 @@ module.exports = function(grunt) {
         }
       }
     },
-
-    /**
-     * `grunt-contrib-less` handles our LESS compilation and uglification automatically.
-     * Only our 'main.less' file is included in compilation; all other files
-     * must be imported from this file.
-     */
     less: {
       build: {
         files: {
@@ -380,15 +350,6 @@ module.exports = function(grunt) {
         }
       }
     },
-
-    /**
-     * 'jshint' defines the rules of our linter as well as which files we
-     * should check. This file, all javascript sources, and all our unit tests
-     * are linted based on the policies listed in 'options'. But we can also
-     * specify exclusionary patterns by prefixing them with an exclamation
-     * point (!); this is useful when code comes from a third party but is
-     * nonetheless inside 'src/'.
-     */
     jshint: {
       src: [
         '<%= app_files.js %>'
@@ -410,12 +371,6 @@ module.exports = function(grunt) {
       },
       globals: {}
     },
-
-    /**
-     * 'coffeelint' does the same as 'jshint', but for CoffeeScript.
-     * CoffeeScript is not the default in ngBoilerplate, so we're just using
-     * the defaults here.
-     */
     coffeelint: {
       src: {
         files: {
@@ -428,15 +383,7 @@ module.exports = function(grunt) {
         }
       }
     },
-
-    /**
-     * HTML2JS is a Grunt plugin that takes all of your template files and
-     * places them into JavaScript files as strings that are added to
-     * AngularJS's template cache. This means that the templates too become
-     * part of the initial payload as one JavaScript file. Neat!
-     */
     html2js: {
-      // These are the templates from 'src/app'.
       app: {
         options: {
           base: 'src/app'
@@ -444,8 +391,6 @@ module.exports = function(grunt) {
         src: ['<%= app_files.appTemplates %>'],
         dest: '<%= build_dir %>/templates-app.js'
       },
-
-      // These are the templates from 'src/common'.
       common: {
         options: {
           base: 'src/common'
@@ -455,18 +400,7 @@ module.exports = function(grunt) {
       }
     },
 
-    /**
-     * The 'index' task compiles the 'index.html' file as a Grunt template. CSS
-     * and JS files co-exist here but they get split apart later.
-     */
     index: {
-
-      /**
-       * During development, we don't want to have wait for compilation,
-       * concatenation, minification, etc. So to avoid these steps, we simply
-       * add all script files directly to the '<head>' of 'index.html'. The
-       * 'src' property contains the list of included files.
-       */
       build: {
         appName: 'emDoScore',
         dir: '<%= build_dir %>',
@@ -480,10 +414,7 @@ module.exports = function(grunt) {
           '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
         ]
       },
-      /**
-       * Identical to above, but with test_files included.
-       * Good for using a mocked backend like $httpBackend.
-       */
+
       mock: {
         appName: 'mockApp',
         dir: '<%= build_dir %>',
@@ -498,12 +429,6 @@ module.exports = function(grunt) {
           '<%= build_dir %>/assets/<%= pkg.name %>-<%= pkg.version %>.css'
         ]
       },
-
-      /**
-       * When it is time to have a completely compiled application, we can
-       * alter the above to include only a single JavaScript and a single CSS
-       * file. Now we're back!
-       */
       compile: {
         appName: 'emDoScore',
         dir: '<%= compile_dir %>',
@@ -514,7 +439,6 @@ module.exports = function(grunt) {
         ]
       }
     },
-
     express: {
       devServer: {
         options: {
@@ -526,10 +450,6 @@ module.exports = function(grunt) {
         }
       }
     },
-
-    /**
-     * The Karma configurations.
-     */
     karma: {
       options: {
         configFile: '<%= build_dir %>/karma-unit.js'
@@ -542,11 +462,6 @@ module.exports = function(grunt) {
         singleRun: true
       }
     },
-
-    /**
-     * This task compiles the karma template so that changes to its file array
-     * don't have to be managed manually.
-     */
     karmaconfig: {
       unit: {
         dir: '<%= build_dir %>',
@@ -558,34 +473,10 @@ module.exports = function(grunt) {
         ]
       }
     },
-
-    /**
-     * And for rapid development, we have a watch set up that checks to see if
-     * any of the files listed below change, and then to execute the listed
-     * tasks when they do. This just saves us from having to type "grunt" into
-     * the command-line every time we want to see what we're working on; we can
-     * instead just leave "grunt watch" running in a background terminal. Set it
-     * and forget it, as Ron Popeil used to tell us.
-     *
-     * But we don't need the same thing to happen for all the files.
-     */
     delta: {
-      /**
-       * By default, we want the Live Reload to work for all tasks; this is
-       * overridden in some tasks (like this file) where browser resources are
-       * unaffected. It runs by default on port 35729, which your browser
-       * plugin should auto-detect.
-       */
       options: {
         livereload: true
       },
-
-      /**
-       * When the Gruntfile changes, we just want to lint it. In fact, when
-       * your Gruntfile changes, it will automatically be reloaded!
-       * We also want to copy vendor files and rebuild index.html in case
-       * vendor_files.js was altered (list of 3rd party vendor files installed by bower)
-       */
       gruntfile: {
         files: 'Gruntfile.js',
         tasks: ['jshint:gruntfile', 'clean:vendor', 'copy:build_vendorjs', 'copy:build_vendorcss', 'index:build'],
@@ -593,51 +484,28 @@ module.exports = function(grunt) {
           livereload: false
         }
       },
-
-      /**
-       * When our JavaScript source files change, we want to run lint them and
-       * run our unit tests.
-       */
       jssrc: {
         files: [
           '<%= app_files.js %>'
         ],
         tasks: ['jshint:src', 'karma:unit:run', 'copy:build_appjs', 'index:build']
       },
-
-      /**
-       * When our CoffeeScript source files change, we want to run lint them and
-       * run our unit tests.
-       */
       coffeesrc: {
         files: [
           '<%= app_files.coffee %>'
         ],
         tasks: ['coffeelint:src', 'coffee:source', 'karma:unit:run', 'copy:build_appjs', 'index:build']
       },
-
-      /**
-       * When assets are changed, copy them. Note that this will *not* copy new
-       * files, so this is probably not very useful.
-       */
       assets: {
         files: [
           'src/assets/**/*'
         ],
         tasks: ['copy:build_app_assets']
       },
-
-      /**
-       * When index.html changes, we need to compile it.
-       */
       html: {
         files: ['<%= app_files.html %>'],
         tasks: ['index:build']
       },
-
-      /**
-       * When our templates change, we only rewrite the template cache.
-       */
       tpls: {
         files: [
           '<%= app_files.appTemplates %>',
@@ -645,19 +513,10 @@ module.exports = function(grunt) {
         ],
         tasks: ['html2js']
       },
-
-      /**
-       * When the CSS files change, we need to compile and minify them.
-       */
       less: {
         files: ['src/**/*.less'],
         tasks: ['less:build']
       },
-
-      /**
-       * When a JavaScript unit test file changes, we only want to lint it and
-       * run the unit tests. We don't want to do any live reloading.
-       */
       jsunit: {
         files: [
           '<%= app_files.jsunit %>'
@@ -667,11 +526,6 @@ module.exports = function(grunt) {
           livereload: false
         }
       },
-
-      /**
-       * When a CoffeeScript unit test file changes, we only want to lint it and
-       * run the unit tests. We don't want to do any live reloading.
-       */
       coffeeunit: {
         files: [
           '<%= app_files.coffeeunit %>'
@@ -815,5 +669,4 @@ module.exports = function(grunt) {
       }
     });
   });
-
 };
