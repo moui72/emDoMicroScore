@@ -1,17 +1,19 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget id="us.peckenpaugh.emDoMsc" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="us.peckenpaugh.emDoMsc" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <preference name="loglevel" value="DEBUG" />
     <feature name="Whitelist">
         <param name="android-package" value="org.apache.cordova.whitelist.WhitelistPlugin" />
         <param name="onload" value="true" />
     </feature>
     <allow-intent href="market:*" />
+    <icon src="www/assets/images/icon.png" />
+    <splash src="www/assets/images/emdoscf.png" />
     <name>EmDo Microcosm Scorer</name>
     <description>
-        A sample Apache Cordova application that responds to the deviceready event.
+        Scoresheet for EmDo Microcosm
     </description>
-    <author email="dev@cordova.apache.org" href="http://cordova.io">
-        Apache Cordova Team
+    <author email="tyler@ty-pe.com" href="http://ty-pe.com">
+        Tyler J. Peckenpaugh
     </author>
     <content src="index.html" />
     <access origin="*" />

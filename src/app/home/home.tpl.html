@@ -1,28 +1,42 @@
 <nav>
-  <div class='nv' ng-hide="minned">
-    <div class="btn-group btn-group-sm" role="group">
-      <button class="btn btn-info" ng-click="setTab(0)" ng-class="{active: isTab(0)}"><i class="fa fa-support"></i> <span class="sr-only">Help</span></button>
-      <button class="btn btn-default" ng-click="setTab(1)" ng-class="{active: isTab(1)}"><i class="fa fa-trophy"></i> Icons</button>
-      <button class="btn btn-default" ng-click="setTab(2)" ng-class="{active: isTab(2)}"><i class="fa fa-tachometer"></i> Conditions</button>
+  <div class="nv" ng-hide="minned">
+    <div class="btn-toolbar center-block" role="toolbar">
+      <div class="btn-group btn-group-xs" role="group">
+        <button class="btn btn-info" ng-click="setTab(0)" ng-class="{active: isTab(0)}"><i class="fa fa-support"></i> <span class="sr-only">Help</span></button>
+        <button class="btn btn-default" ng-click="setTab(1)" ng-class="{active: isTab(1)}"><i class="fa fa-trophy"></i> Assets</button>
+        <button class="btn btn-default" ng-click="setTab(2)" ng-class="{active: isTab(2)}"><i class="fa fa-tachometer"></i> Conditions</button>
+      </div>
+      <div class="btn-group btn-group-xs" role="group">
+        <button class="btn btn-default" ng-click="toHash()"><i class="fa fa-angle-double-up"></i> <span class="sr-only">Top</span></button>
+        <button class="btn btn-danger" ng-if="isTab(2)" ng-click="clear('sc')"><i class="fa fa-trash"></i><span class="sr-only">clear scoring conditions</span></button>
+        <button class="btn btn-danger" ng-if="isTab(1)" ng-click="clear('aq')"><i class="fa fa-trash"></i><span class="sr-only">clear assets</span></button>
+      </div>
     </div>
   </div>
   <button class="btn btn-warning left btn-xs" aria-hidden="true" ng-hide="minned" ng-click="minned = true"><i class="fa fa-minus"></i></button>
   <button class="btn btn-info left btn-xs" aria-hidden="true" ng-show="minned" ng-click="minned = false"><i class="fa fa-plus"></i></button>
 </nav>
-<div class="scoreboardWrapper">
+<div class="scoreboardWrapper" id="scoreboard">
   <div class="text-center scoreboard">
-    <h2>You&apos;ve earned {{score | number : 0}} influence.</h2>
+    <h2>You&apos;ve earned <span class="score">{{score | number : 0}}</span> influence.</h2>
+  </div>
+  <div class='text-center vspace' ng-hide="isTab(0)">
     <label>Raw influence</label>
-    <div class="input-group inf">
+    <div class="input-group input-group-sm inf">
       <span class="input-group-btn" ng-click="increment($index, 'inf')"><button class="btn btn-success"><i class="fa fa-plus"></i></button></span>
       <input accept="text/html" type="number" min="0" ng-model="inf" class="form-control" ng-change="calculateScore()">
       <span class="input-group-btn"><button class="btn btn-warning" ng-click="decrement($index, 'inf')" ><i class="fa fa-minus"></i></button></span>
     </div>
   </div>
-<div>
+
+</div>
+
+
 <div class="contents">
   <div heading="Help" ng-show="tab === 0">
     <div class="help">
+      <img src="assets/images/banner.png" alt='Eminient Domain Microcosm scoresheet' class='center-block' width="250px">
+      <h1 class="indent"><i class="fa fa-support"></i> Help</h1>
       <p>This application is intended to make the scoring of the card game Eminent Domain: Michrochosm easier.</p>
       <p>You should approach use of this app in three steps after having completed your game:</p>
       <ol>
@@ -42,40 +56,46 @@
       </ol>
     </div>
   </div>
-  <div heading="Icons" ng-show="tab === 1">
-    <h1 class="text-center">Icons</h1>
+  <div heading="Assets" ng-show="tab === 1">
+    <button class="btn btn-danger btn-sm pull-right indent" ng-click="clear('aq')"><i class="fa fa-trash"></i><span class="sr-only">clear assets</span></button>
+    <h1 class="indent"><i class="fa fa-trophy"></i> Assets acquired</h1>
     <div class="container">
       <div ng-repeat="icon in sets" class="{{gridClasses}} griditem">
         <div class="itemWrapper">
           <button ng-click="increment($index,'aq')" class="btn btn-default gridbtn {{icon.name}}">
-            <i class="fa fa-{{icon.symbol}}"></i>
-            <h3>{{icon.name}}</h3>
+            <div><i class="fa fa-{{icon.symbol}}"></i> <span>{{icon.name}}</span> acquired</div>
           </button>
           <div class="input-group-sm input-group">
-            <span class="input-group-btn" ng-click="increment($index, 'aq')"><button class="btn btn-success"><i class="fa fa-plus"></i></button></span>
-            <input accept="text/html" type="number" min="0" ng-model="icon.aqCount" class="form-control" ng-change="calculateScore()">
             <span class="input-group-btn"><button class="btn btn-warning" ng-click="decrement($index, 'aq')" ><i class="fa fa-minus"></i></button></span>
+            <input accept="text/html" type="number" min="0" ng-model="icon.aqCount" class="form-control" ng-change="calculateScore()">
+            <span class="input-group-btn" ng-click="increment($index, 'aq')"><button class="btn btn-success"><i class="fa fa-plus"></i></button></span>
           </div>
-          <button class="btn btn-danger clr btn-xs"  ng-click="zero($index, 'aq')">reset</button>
+          <div class="btn-group-xs btn-group">
+            <button class="btn btn-default"  ng-click="zero($index, 'aq')"><i class="fa fa-trash"></i><span class="sr-only">clear assets</span></button>
+            <button class="btn btn-default" ng-click="toHash('scoreboard')"><i class="fa fa-angle-double-up"></i> <span class="sr-only">Top</span></button>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <div heading="Conditions" ng-show="tab === 2">
-    <h1 class="text-center">Scoring conditions</h1>
+  <div heading="Conditions" ng-show="tab === 2" class="co">
+    <button class="btn btn-danger btn-sm pull-right indent" ng-click="clear('sc')"><i class="fa fa-trash"></i><span class="sr-only">clear scoring conditions</span></button>
+    <h1 class="indent"><i class="fa fa-tachometer"></i> Scoring conditions</h1>
     <div class="container">
       <div ng-repeat="icon in sets" class="{{gridClasses}} griditem">
         <div class="itemWrapper">
           <button ng-click="increment($index, 'sc')" class="btn btn-default gridbtn {{icon.name}}">
-            <i class="fa fa-{{icon.symbol}}"></i>
-            <h3>{{icon.name}}</h3>
+            <div><i class="fa fa-tachometer"></i> <span>{{icon.name}}</span></div>
           </button>
           <div class="input-group-sm input-group">
-            <span class="input-group-btn" ng-click="increment($index,'sc')"><button class="btn btn-success"><i class="fa fa-plus"></i></button></span>
-            <input accept="text/html" type="number" min="0" ng-model="icon.scCount" class="form-control" ng-change="calculateScore()">
             <span class="input-group-btn"><button class="btn btn-warning" ng-click="decrement($index, 'sc')" ><i class="fa fa-minus"></i></button></span>
+            <input accept="text/html" type="number" min="0" ng-model="icon.scCount" class="form-control" ng-change="calculateScore()">
+            <span class="input-group-btn" ng-click="increment($index,'sc')"><button class="btn btn-success"><i class="fa fa-plus"></i></button></span>
           </div>
-          <button class="btn btn-danger clr btn-xs" ng-click="zero($index, 'sc')">reset</button>
+          <div class="btn-group-xs btn-group">
+            <button class="btn btn-default"  ng-click="zero($index, 'sc')"><i class="fa fa-trash"></i><span class="sr-only">clear {{icon.name}}</span></button>
+            <button class="btn btn-default" ng-click="toHash('scoreboard')"><i class="fa fa-angle-double-up"></i> <span class="sr-only">Top</span></button>
+          </div>
         </div>
       </div>
     </div>

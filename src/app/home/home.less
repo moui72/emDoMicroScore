@@ -16,16 +16,9 @@ h1{
 h2{
   font-size: 1.5em;
 }
-h3{
-  font-size: 1em;
-  line-height: .75em;
-}
 .griditem{
   color: #666;
-  h3{
-    text-transform: capitalize;
-    margin: .25em 0;
-  }
+
   text-align: center;
   padding: .5em;
   .itemWrapper{
@@ -41,9 +34,18 @@ h3{
     background-color: #333;
     margin: 0 auto;
     width: 100%;
+    white-space: normal;
     i{
-      font-size: 1.5em;
-      color: #ccc;
+      font-size: 1.25em;
+      margin: .125em 0;
+    }
+    div{
+      span{
+        text-transform: capitalize;
+        font-weight: bold;
+      }
+      padding:0;
+      margin:0;
     }
   }
   .red{
@@ -67,14 +69,25 @@ h3{
 
 }
 .scoreboardWrapper{
-  padding: 0 1em;
+  padding: 0;
   .scoreboard{
     border-radius:.5em;
     background-color: #333;
     color: #eee;
-    padding: 1em;
-    padding-top: .5em;
+    padding: .75em;
+    padding-top: .125em;
     margin-bottom: 1em;
+    margin-top: .5em;
+    font-size: 1.25em;
+  }
+  .input-group{
+    -ms-transform: scale(.75,.75); /* IE 9 */
+    -webkit-transform: scale(.75,.75); /* Safari */
+    transform: scale(.75,.75);
+    max-width: 30em;
+  }
+  h2{
+    font-weight: bolder;
   }
 }
 button.gridbtn:hover{
@@ -102,9 +115,6 @@ footer{
   border-radius: 1em;
   margin-bottom: 1em;
 }
-.container{
-  padding: 0;
-}
 .inf{
   max-width: 400px;
   margin: 0 auto;
@@ -115,28 +125,59 @@ nav{
     text-align: center;
     position: fixed;
     height: 43px;
-    padding-top: 6px;
+    padding-top: 10px;
     bottom: 0;
     left:0;
     width: 100vw;
     z-index: 100;
-    .btn-group{
+    .btn-toolbar{
+      display: inline-block;
       margin: 0 auto;
-      button{
-        opacity: 1;
-      }
     }
     button.active{
       background-color: #393;
       color: #ccc;
     }
     background-color: #333;
-    opacity: .95;
   }
   .left{
     position: fixed;
-    left: 10px;
-    bottom: 10px;
+    left: 13px;
+    bottom: 13px;
     z-index: 200;
+    font-size: .9em;
   }
+}
+.co{
+  .gridbtn{
+    background-color: #eee;
+    color: #666;
+  }
+  .red{
+    color: @red;
+  }
+  .yellow{
+    color: @yellow;
+  }
+  .green{
+    color: @green;
+  }
+  .purple{
+    color: @purple;
+  }
+}
+.container{
+  padding: 0;
+}
+.vspace{
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+.indent{
+  margin-left: 1em;
+  margin-right: 1em;
+}
+.score{
+  font-size: 1.5em;
+  color: #E93;
 }

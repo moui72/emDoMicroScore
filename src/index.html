@@ -9,16 +9,16 @@
     <!-- compiled JavaScript --><% scripts.forEach( function ( file ) { %>
     <script type="text/javascript" src="<%= file %>"></script><% }); %>
 </head>
-<body class="{icons: tab === 1, conditions: tab === 2}">
+<body>
     <header class='container'>
-      <h1 class="text-center">Scoresheet <br> <small>for Eminent Domain: Microcosm</small></h1>
+      <h1 class="sr-only">Scoresheet <br> <small>for Eminent Domain: Microcosm</small></h1>
     </header>
     <div role="main" ui-view="main" class='container'>
 
     </div>
 
     <footer class="container">
-        &copy; <%= date %> <%= author %>
+        &copy; <%= date %> <a href="http://ty-pe.com"><%= author %></a>.
     </footer>
 </body>
 </html>
